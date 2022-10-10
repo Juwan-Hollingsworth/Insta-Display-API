@@ -15,9 +15,8 @@
         function __construct( $params ){
             //save instagram code
             $this->_getCode = $params['get_code'];
-            //get an access token 
+            //get a access token 
             $this->_setUserInstagramAccessToken ( $params );
-
             //get authorization url
             $this->_setAuthorizationUrl();
         }
