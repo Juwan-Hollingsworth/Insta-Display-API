@@ -11,9 +11,14 @@
         $ig = new ig_basic_display_api( $params);
 
         ?>
-    
+
     <h1>Spark: IG Basic Display API</h1>
     <hr/>
-    <a href="<?php echo $ig->authorizationUrl; ?>"> Authorize Here
- </a>
+    <?php if($ig->hasUserAccessToken): ?>
+        <h4>IG Info</h4>
+        <?php echo $ig->getUserAccessToken(); ?>
+     <?php else: ?>
+        <a href="<?php echo $ig->authorizationUrl; ?>"> Authorize Here
+        </a>
+    <?php endif; ?>
     
