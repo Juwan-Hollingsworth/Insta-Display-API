@@ -18,6 +18,7 @@
     <!-- if user has token - display content + show token -->
     <?php if($ig->hasUserAccessToken): ?>
         <h4>IG Info</h4>
+        <h6>Access Token </h6>
         <?php echo $ig->getUserAccessToken(); ?>
 
     <!-- else show authorization URL -->
