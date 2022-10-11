@@ -1,7 +1,11 @@
 <?php 
     require_once('defines.php');
 
+
+    //Class that calls to IG Basic Display API
     Class ig_basic_display_api {
+
+        //declare variables
         private $_appId = INSTAGRAM_APP_ID;
 		private $_appSecret = INSTAGRAM_APP_SECRET;
 		private $_redirectUrl = INSTAGRAM_APP_REDIRECT_URI;
@@ -12,12 +16,15 @@
         public $authorizationUrl = '';
         public $hasUserAccessToken = false;
 
+
+        //call f(x) when Class is instantiated.
         function __construct( $params ){
             //save instagram code
+            //get_code = IG URL Identifier 
             $this->_getCode = $params['get_code'];
             //get a access token 
             $this->_setUserInstagramAccessToken ( $params );
-            //get authorization url
+            //if no access token in URL generate authorization url. 
             $this->_setAuthorizationUrl();
         }
 
@@ -25,7 +32,10 @@
             return $this->_userAccessToken;
 
         }
-
+        //get auth URL
+        // send app_id, redirect URL, scope & response type as varaibles
+        // scope =  access  permission 
+        //send users to instagram to auth w/ app
         private function _setAuthorizationUrl(){
             $getVars = array( 
 				'app_id' => $this->_appId,
@@ -39,7 +49,8 @@
         }
 
         private function _setUserInstagramAccessToken( $params ){
-            // if get code is available> access token
+            // if get code exist > get access token
+            // short lived access token
             if ($params['get_code']) {
             $userAccessTokenResponse = $this->_getUserAccessToken();
 				$this->_userAccessToken = $userAccessTokenResponse['access_token'];
@@ -49,6 +60,7 @@
 
         }
 
+        // build access token request params
         private function _getUserAccessToken() {
             $params = array (
                 'endpoint_url' => $this->_apiBaseUrl . 'oauth/access_token',
@@ -61,15 +73,23 @@
 					'code' => $this->_getCode
                 )
             );
+
+            //make an API call passing in params
+            // return response payload
             $response = $this->_makeApiCall( $params );
 			return $response;
         }
-
+        // make API call via Curl
         private function _makeApiCall( $params){
+            //intitialize curl
             $ch = curl_init();
+            //set endpoint
             $endpoint = $params['endpoint_url'];
 
-            if ( 'POST' == $params['type'] ) { // post request
+            //check what type of call
+            // POST req settings different from GET
+            if ( 'POST' == $params['type'] ) { 
+                //POST req. build query based on URL params
 				curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $params['url_params'] ) );
 				curl_setopt( $ch, CURLOPT_POST, 1 );
 			}
@@ -79,13 +99,14 @@
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
+            //get response from instagram via curl
             $response = curl_exec( $ch);
-            
+            //close curl call
             curl_close( $ch);
-
+            // store response in php arr
             $responseArray = json_decode($response, true);
-
+            //if err show on page & close
+            //!if no err return response
             if (isset ($responseArray['error_type'])){
                 var_dump( $responseArray);
                 die();
