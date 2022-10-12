@@ -57,15 +57,16 @@
         private function _setUserInstagramAccessToken( $params ){
             // if get code exist > get access token
             // short lived access token
-            if ($params['get_code']) {
-            $userAccessTokenResponse = $this->_getUserAccessToken();
+            if ( $params['get_code'] ) { // try to get a access token
+				$userAccessTokenResponse = $this->_getUserAccessToken();
 				$this->_userAccessToken = $userAccessTokenResponse['access_token'];
 				$this->hasUserAccessToken = true;
 
                 //get long lived access token
-                $longLivedAccessTokenResponse = $this->_getLongLivedUserAccessToken();
-                $this->_userAccessToken = $longLivedAccessTokenResponse['access_token'];
-                $this->_userAccessTokenExpires = $longLivedAccessTokenResponse['expires_in'];
+             // get long lived access token
+				$longLivedAccessTokenResponse = $this->_getLongLivedUserAccessToken();
+				$this->_userAccessToken = $longLivedAccessTokenResponse['access_token'];
+				$this->_userAccessTokenExpires = $longLivedAccessTokenResponse['expires_in'];
             }
 
 
@@ -92,13 +93,12 @@
         }
 
        private function _getLongLivedUserAccessToken(){
-        $params = array (
+        $params = array(
             'endpoint_url' => $this->_graphBaseUrl . 'access_token',
             'type' => 'GET',
             'url_params' => array(
-                'client_secret' => $this._appSecret,
-                'grant_type' => 'ig_exchage_token',
-               
+                'client_secret' => $this->_appSecret,
+                'grant_type' => 'ig_exchange_token',
             )
         );
         $response = $this->_makeApiCall( $params );
