@@ -20,6 +20,8 @@
         <h4>IG Info</h4>
         <h6>Access Token </h6>
         <?php echo $ig->getUserAccessToken(); ?>
+        <h6>Expires In:</h6>
+        <php echo ceil($ig->getUserAccessTokenExpires()); ?> days
 
     <!-- else show authorization URL -->
      <?php else: ?>

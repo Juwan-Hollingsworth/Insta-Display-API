@@ -34,6 +34,10 @@
             return $this->_userAccessToken;
 
         }
+        public function getUserAccessTokenExpires(){
+            return $this->_userAccessTokenExpires;
+
+        }
         //get auth URL
         // send app_id, redirect URL, scope & response type as varaibles
         // scope =  access  permission 
