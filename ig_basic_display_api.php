@@ -34,6 +34,8 @@
             return $this->_userAccessToken;
 
         }
+
+        //return token in secs
         public function getUserAccessTokenExpires(){
             return $this->_userAccessTokenExpires;
 
@@ -55,18 +57,24 @@
         }
 
         private function _setUserInstagramAccessToken( $params ){
+            // check if we are passing an access token
+            if ($params['access_token']){
+                $this->_userAccessToken = $params['access_token'];
+                $this->hasUserAccessToken = true;
+            }
             // if get code exist > get access token
             // short lived access token
-            if ( $params['get_code'] ) { // try to get a access token
+            elseif ( $params['get_code'] ) { // try to get a access token
 				$userAccessTokenResponse = $this->_getUserAccessToken();
 				$this->_userAccessToken = $userAccessTokenResponse['access_token'];
 				$this->hasUserAccessToken = true;
 
+
                 //get long lived access token
-             // get long lived access token
 				$longLivedAccessTokenResponse = $this->_getLongLivedUserAccessToken();
 				$this->_userAccessToken = $longLivedAccessTokenResponse['access_token'];
-				$this->_userAccessTokenExpires = $longLivedAccessTokenResponse['expires_in'];
+                //get time token expires (secs)
+				$this->_userAccessTokenExpires = (int)$longLivedAccessTokenResponse['expires_in'];
             }
 
 
@@ -92,6 +100,26 @@
 			return $response;
         }
 
+
+        public function getUser(){
+            $params = array(
+				'endpoint_url' => $this->_graphBaseUrl . 'me',
+				'type' => 'GET',
+				'url_params' => array(
+					'fields' => 'id,username,media_count,account_type',
+				)
+                );
+
+                $response = $this->_makeApiCall( $params );
+			return $response;
+
+        }
+
+
+
+
+        //requires different endpoint URL
+        //graph base URL
        private function _getLongLivedUserAccessToken(){
         $params = array(
             'endpoint_url' => $this->_graphBaseUrl . 'access_token',
