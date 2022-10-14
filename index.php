@@ -2,8 +2,8 @@
 
         require_once('ig_basic_display_api.php');
 
-        $accessToken = 'IGQVJVZA082YVZA1MXNfMlFpUGtfN251Vk1zQ3BWVmtuOXNndkFPWnhZAZAlpILVBzU01xWV9mN2ZAzNFVYWGhzYkNiVnczQW1OU1lMQzZAzeHNIbFN2SmtiSDh3SU9MZAmxid3VpY2IxMnZAR
-        ';
+        // $accessToken = 'IGQVJVZA082YVZA1MXNfMlFpUGtfN251Vk1zQ3BWVmtuOXNndkFPWnhZAZAlpILVBzU01xWV9mN2ZAzNFVYWGhzYkNiVnczQW1OU1lMQzZAzeHNIbFN2SmtiSDh3SU9MZAmxid3VpY2IxMnZAR
+        // ';
 
         //check for code in the URL if one exist pass it along if not set to empty
         $params = array(
