@@ -1,4 +1,4 @@
 <?php
-    define('INSTAGRAM_APP_ID','657018599126328');
-    define('INSTAGRAM_APP_SECRET','2b0731f449baf0be700efcee0e251212');
+    define('INSTAGRAM_APP_ID','768638091102065');
+    define('INSTAGRAM_APP_SECRET','fed6b1b929bec89f8df2e57f6125429d');
     define('INSTAGRAM_APP_REDIRECT_URI','https://test-app-display.herokuapp.com/');

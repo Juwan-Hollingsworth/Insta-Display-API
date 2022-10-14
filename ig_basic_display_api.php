@@ -40,14 +40,12 @@
 
         private function _setUserInstagramAccessToken( $params ){
             // if get code is available> access token
-            if ($params['get_code']) 
-            $userAccessTokenResponse = $this->_getUserAccessToken();
-
-            $this->_userAccessToken = $userAccessTokenResponse['access_token'];
-
-            $this->hasUserAccessToken = true;
+            if ($params['get_code']) {
+                $userAccessTokenResponse = $this->_getUserAccessToken();
+                    $this->_userAccessToken = $userAccessTokenResponse['access_token'];
+                    $this->hasUserAccessToken = true;
         }
-
+    }
         private function _getUserAccessToken() {
             $params = array (
                 'endpoint_url' => $this->_apiBaseUrl . 'oauth/access_token',
