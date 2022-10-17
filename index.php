@@ -16,7 +16,7 @@
     <h1>Spark: IG Basic Display API</h1>
     <hr/>
     <?php if($ig->hasUserAccessToken): ?>
-        <h4>IG Info</h4>
+        <h4>IG User Info</h4>
         
         <?php $user = $ig->getUser(); ?>
         
