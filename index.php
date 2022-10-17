@@ -8,7 +8,8 @@
         //check for code in the URL if one exist pass it along if not set to empty
         $params = array(
             'get_code' => isset($_GET['code'])? $_GET['code'] : '',
-            'access_token' => $accessToken
+            'access_token' => $accessToken,
+            'user_id' => '5269063709882686' // save userid (req) 4 usr Posts
         );
 
 
@@ -34,6 +35,14 @@
     <h1>Media Count: <?php echo $user['media_count']; ?><h1>
     <h1>Follower Count: <?php echo $user['followers_count']; ?><h1>
     <h1>Account Type: <?php echo $user['account_type']; ?><h1>
+
+    </hr>
+    <?php $usersMedia = $ig->getUserMedia();?>
+    <h3> Users Media Page 1 (<?php echo count($usersMedia['data']); ?>)</h3>
+    <h4> Raw Data <h4>
+        <textarea style="width:100%;height:400px;"><?php print_r($usersMedia['data']); ?></textarea>
+
+    </hr>
 
 
         <h6>Access Token </h6>

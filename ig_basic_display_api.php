@@ -17,6 +17,7 @@
        
         public $authorizationUrl = '';
         public $hasUserAccessToken = false;
+        public $userId = '';
 
 
         //call f(x) when Class is instantiated.
@@ -61,6 +62,7 @@
             if ($params['access_token']){
                 $this->_userAccessToken = $params['access_token'];
                 $this->hasUserAccessToken = true;
+                $this->userId = $params['user_id'];
             }
             // if get code exist > get access token
             // short lived access token
@@ -68,6 +70,8 @@
 				$userAccessTokenResponse = $this->_getUserAccessToken();
 				$this->_userAccessToken = $userAccessTokenResponse['access_token'];
 				$this->hasUserAccessToken = true;
+                //set userId to user_id found in response
+                $this->userId =$userAccessTokenResponse['user_id'];
 
 
                 //get long lived access token
@@ -109,12 +113,26 @@
 					'fields' => 'id,username,media_count,account_type',
 				)
                 );
-
+                
                 $response = $this->_makeApiCall( $params );
 			return $response;
 
         }
 
+        //get user posts function
+        public function getUserMedia(){
+            $params = array(
+             'endpoint_url' => $this->_graphBaseUrl . $this->userId . '/media',
+                        'type' => 'GET',
+                        'url_params' => array(
+                            'fields' => 'id,caption,media_type, media_url',
+                        )
+                        );
+
+                              
+                $response = $this->_makeApiCall( $params );
+                return $response;
+                    }    
 
 
 
