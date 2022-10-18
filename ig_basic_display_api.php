@@ -134,6 +134,20 @@
                 return $response;
                     }    
 
+ //get pages of content function
+ public function getPaging( $pagingEndpoint ){
+    $params = array(
+     'endpoint_url' => $pagingEndpoint,
+                'type' => 'GET',
+                'url_params' => array(
+                    'paging' => true
+                )
+                );
+
+                      
+        $response = $this->_makeApiCall( $params );
+        return $response;
+            }   
 
 
         //requires different endpoint URL
@@ -165,7 +179,8 @@
                 //POST req. build query based on URL params
 				curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $params['url_params'] ) );
 				curl_setopt( $ch, CURLOPT_POST, 1 );
-			} elseif ('GET' == $params['type']){
+                // if get and paging is false
+			} elseif ('GET' == $params['type'] && !$params['url_params']['paging'] ){
                 //get request
                 $params['url_params']['access_token'] = $this->_userAccessToken;
 
