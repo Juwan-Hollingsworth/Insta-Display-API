@@ -1,5 +1,5 @@
 <?php 
-    require_once('defines.php');
+    require_once('__defines.php');
 
 
     //Class that calls to IG Basic Display API
