@@ -40,7 +40,39 @@
     <?php $usersMedia = $ig->getUserMedia();?>
     <h3> Users Media Page 1 (<?php echo count($usersMedia['data']); ?>)</h3>
     <h4> Raw Data <h4>
-        <textarea style="width:100%;height:400px;"><?php print_r($usersMedia['data']); ?></textarea>
+        <!-- print response -->
+        <textarea style="width:100%;height:400px;"><?php print_r($usersMedia); ?></textarea>
+        
+        <h4> Posts </h4>
+        <!-- create list of all posts -->
+        <ul style="list-style: none;margin:0px;padding:0px;">
+        <?php foreach( $usersMedia['data'] as $post) : ?>
+            <li string="margin-bottom:20px; border:3px solid #333">
+                <div>
+                    <!-- display image based on type of media -->
+                <?php if('IMAGE' == $post['media_type'] || 'CAROUSEL_ALBUM' == $post['media_url']) :  ?>
+                    <img style="height:320px" src="<?php echo $post['media_url']; ?>" />
+                <?php else: ?>
+                    <video height="240" width="320" controls>
+                        <source src="<?php echo $post['media_url']; ?>">
+                </video>
+                 <?php endif; ?>
+        </div>
+        <!-- display other data recieved for each post -->
+        <div>
+            <b> Caption: <?php echo $post['caption']; ?> </b>
+        </div>
+        <div>
+            <b> Id: <?php echo $post['id']; ?> </b>
+        </div>
+        <div>
+            <b> Media Type: <?php echo $post['media_type']; ?> </b>
+        </div>
+        <div>
+            <b> Media URL: <?php echo $post['media_url']; ?> </b>
+        </div>
+        <?php endforeach; ?>
+        </ul> 
 
     </hr>
 
